@@ -1,0 +1,20 @@
+Ankit Gupta
+
+Skills:
+JavaScript
+Python
+Java
+HTML
+CSS
+Node.js
+MongoDB
+SQL
+
+Projects:
+Musico
+Assistify
+RecruitFlow AI
+
+Education:
+BSc Computer Science
+...

@@ -1,0 +1,106 @@
+{
+  "rushi": {
+    "name": "Sai Rushi Kasyap",
+    "email": "rushimukkamala5@gmail.com",
+    "phone": "+1 (346)-646-8149",
+    "location": "Monroe, Michigan (Relocating)",
+    "linkedin": "https://www.linkedin.com/in/rushi-mukkamala",
+    "github": "",
+    "open_to_relocate": "yes",
+    "work_auth": "STEM OPT",
+    "availability": "immediate",
+    "experience": "not mentioned",
+    "rate": "Negotiable",
+    "employer": "quinn@jpitstaffing.com",
+    "employer_number": "+1 5716265445",
+    "base_resume_file": "test_resume_rushi.txt",
+    "base_resume_pdf": "resumes/rushi_base.pdf",
+    "education": [
+      {
+        "degree": "Master of Science in Finance",
+        "institution": "University of Houston",
+        "duration": "Houston, TX",
+        "cgpa": ""
+      },
+      {
+        "degree": "Bachelor of Science in Accounting",
+        "institution": "",
+        "duration": "",
+        "cgpa": ""
+      }
+    ],
+    "keywords": [
+      "Assistant Controller",
+      "Assistant Controller Nonprofit",
+      "Accounting Manager",
+      "Finance Manager",
+      "Financial Reporting Manager",
+      "Senior Accountant",
+      "Grant Accountant",
+      "Nonprofit Accountant",
+      "Fund Accountant",
+      "Government Grants Accountant",
+      "General Ledger Accountant",
+      "Accounting Operations Manager",
+      "Corporate Accountant",
+      "Internal Controls Manager",
+      "Financial Analyst",
+      "Budget Analyst",
+      "Controller",
+      "Senior Accounting Manager",
+      "Finance Business Partner",
+      "Accounting & Finance Manager"
+    ],
+    "cc": ["rushimukkamala5@gmail.com", "quinn@jpitstaffing.com"],
+    "bcc": ["kim@jpitstaffing.com"]
+  },
+  "anoushika": {
+    "name": "Santosh Anoushika Komala",
+    "email": "santoshanoushikakomala@gmail.com",
+    "phone": "+1 203 809 9717",
+    "location": "West Haven, CT 06516",
+    "linkedin": "https://www.linkedin.com/in/anoushika-komala",
+    "github": "",
+    "open_to_relocate": "yes",
+    "work_auth": "Stem OPT",
+    "availability": "M - F : 11 AM - 6 PM EST",
+    "experience": "2 years",
+    "rate": "Negotiable",
+    "employer": "quinn@jpitstaffing.com",
+    "employer_number": "+1 5716265445",
+    "base_resume_file": "test_resume_anoushika.txt",
+    "base_resume_pdf": "resumes/anoushika_base.pdf",
+    "education": [
+      {
+        "degree": "Master of Science in Cybersecurity and Networks",
+        "institution": "University of New Haven",
+        "duration": "Aug 2023 - May 2025",
+        "cgpa": "3.55"
+      }
+    ],
+    "keywords": [
+      "SOC Analyst",
+      "SOC Analyst L1",
+      "SOC Analyst L2",
+      "Cyber Security Analyst",
+      "Information Security Analyst",
+      "Security Operations Center Analyst",
+      "Security Analyst",
+      "IAM Analyst",
+      "Identity and Access Management Analyst",
+      "Active Directory Administrator",
+      "SIEM Analyst",
+      "Incident Response Analyst",
+      "Threat Intelligence Analyst",
+      "Threat Hunting Analyst",
+      "Blue Team Analyst",
+      "Vulnerability Management Analyst",
+      "Cloud Security Analyst",
+      "Cyber Defense Analyst",
+      "Security Operations Engineer",
+      "Junior Security Engineer"
+    ],
+    "cc": ["santoshanoushikakomala@gmail.com", "quinn@jpitstaffing.com"],
+    "bcc": ["kim@jpitstaffing.com"]
+  }
+}

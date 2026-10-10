@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-950 text-slate-100">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RecruitFlow AI - Smart Recruiter Outreach & Pipeline Dashboard</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti CDN for celebration -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0f5ff',
+                            100: '#e0ebff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            800: '#3730a3',
+                            900: '#312e81',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="h-full flex flex-col font-sans antialiased text-slate-200 bg-slate-950 selection:bg-indigo-500 selection:text-white">
+
+    <!-- Top Navigation Header -->
+    <header class="bg-slate-900/80 backdrop-blur-md border-b border-slate-800 sticky top-0 z-30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                
+                <!-- Logo & Title -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 via-purple-600 to-pink-500 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                        <i class="fa-solid fa-paper-plane text-white text-lg"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-xl font-bold bg-gradient-to-r from-white via-slate-100 to-slate-400 bg-clip-text text-transparent">RecruitFlow</span>
+                            <span class="px-2 py-0.5 text-xs font-semibold bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 rounded-full">AI v2.0</span>
+                        </div>
+                        <p class="text-xs text-slate-400 hidden sm:block">Automated Recruiter Outreach & Resume Optimization</p>
+                    </div>
+                </div>
+
+                <!-- Center: Active Candidate Selector -->
+                <div class="flex items-center bg-slate-800/80 p-1 rounded-xl border border-slate-700/80 shadow-inner">
+                    <label for="candidateSelect" class="text-xs font-medium text-slate-400 pl-3 pr-2 flex items-center gap-1.5">
+                        <i class="fa-solid fa-user-tie text-indigo-400"></i> Candidate:
+                    </label>
+                    <select id="candidateSelect" onchange="handleCandidateChange()" class="bg-slate-900 text-white text-xs font-semibold py-1.5 px-3 rounded-lg border border-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 cursor-pointer">
+                        <option value="all">🌟 All Candidates (Combined View)</option>
+                        <option value="rushi" selected>Sai Rushi Kasyap (Finance / Accounting)</option>
+                        <option value="anoushika">Santosh Anoushika Komala (Cybersecurity / SOC)</option>
+                        <option value="default">Default DB Leads</option>
+                    </select>
+                </div>
+
+                <!-- Right Actions & Status -->
+                <div class="flex items-center space-x-3">
+                    <div class="hidden md:flex items-center space-x-2 px-3 py-1 rounded-full bg-slate-800/60 border border-slate-700/50 text-xs">
+                        <span id="apiStatusDot" class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                        <span id="apiStatusText" class="text-slate-300 font-medium">API Connected</span>
+                    </div>
+
+                    <button onclick="openAddJobModal()" class="inline-flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold px-3 py-2 rounded-lg border border-slate-700 transition">
+                        <i class="fa-solid fa-plus text-indigo-400"></i> Add Lead
+                    </button>
+
+                    <button onclick="switchTab('campaign')" class="inline-flex items-center gap-2 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white text-xs font-bold px-4 py-2 rounded-lg shadow-md shadow-indigo-600/30 transition">
+                        <i class="fa-solid fa-rocket"></i> Launch Campaign
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Workspace Container -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-6">
+
+        <!-- Top Metrics Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            
+            <!-- Card 1: Total Recruiters -->
+            <div class="bg-slate-900/90 border border-slate-800/80 rounded-2xl p-5 shadow-lg relative overflow-hidden group hover:border-slate-700 transition">
+                <div class="absolute -right-4 -top-4 w-24 h-24 bg-indigo-500/10 rounded-full blur-xl group-hover:bg-indigo-500/20 transition"></div>
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">Total Leads</p>
+                        <h3 id="statTotal" class="text-3xl font-extrabold text-white mt-1">--</h3>
+                    </div>
+                    <div class="w-12 h-12 rounded-xl bg-indigo-500/15 border border-indigo-500/30 flex items-center justify-center text-indigo-400 text-xl">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                </div>
+                <div class="mt-3 flex items-center justify-between text-xs">
+                    <span id="statDbLabel" class="text-slate-400 flex items-center gap-1">
+                        <i class="fa-solid fa-database text-indigo-400"></i> jobs_rushi.db
+                    </span>
+                    <span class="text-indigo-400 font-semibold">Active Database</span>
+                </div>
+            </div>
+
+            <!-- Card 2: Sent Emails -->
+            <div class="bg-slate-900/90 border border-slate-800/80 rounded-2xl p-5 shadow-lg relative overflow-hidden group hover:border-slate-700 transition">
+                <div class="absolute -right-4 -top-4 w-24 h-24 bg-emerald-500/10 rounded-full blur-xl group-hover:bg-emerald-500/20 transition"></div>
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">Emails Sent</p>
+                        <h3 id="statSent" class="text-3xl font-extrabold text-emerald-400 mt-1">--</h3>
+                    </div>
+                    <div class="w-12 h-12 rounded-xl bg-emerald-500/15 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-xl">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <div class="w-full bg-slate-800 rounded-full h-1.5 overflow-hidden">
+                        <div id="statProgressBar" class="bg-emerald-500 h-1.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+                    </div>
+                    <div class="flex justify-between items-center text-xs mt-1">
+                        <span id="statSentPercentage" class="text-emerald-400 font-bold">0% Sent</span>
+                        <span class="text-slate-500">Outreach rate</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3: Pending Leads -->
+            <div class="bg-slate-900/90 border border-slate-800/80 rounded-2xl p-5 shadow-lg relative overflow-hidden group hover:border-slate-700 transition">
+                <div class="absolute -right-4 -top-4 w-24 h-24 bg-amber-500/10 rounded-full blur-xl group-hover:bg-amber-500/20 transition"></div>
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">Pending Outreach</p>
+                        <h3 id="statPending" class="text-3xl font-extrabold text-amber-400 mt-1">--</h3>
+                    </div>
+                    <div class="w-12 h-12 rounded-xl bg-amber-500/15 border border-amber-500/30 flex items-center justify-center text-amber-400 text-xl">
+                        <i class="fa-solid fa-clock"></i>
+                    </div>
+                </div>
+                <div class="mt-3 flex items-center justify-between text-xs">
+                    <span class="text-amber-400 font-medium flex items-center gap-1">
+                        <i class="fa-solid fa-bolt"></i> Ready for batch send
+                    </span>
+                    <button onclick="switchTab('campaign')" class="text-indigo-400 hover:text-indigo-300 font-semibold underline">Send now</button>
+                </div>
+            </div>
+
+            <!-- Card 4: Active Profile Summary -->
+            <div class="bg-slate-900/90 border border-slate-800/80 rounded-2xl p-5 shadow-lg relative overflow-hidden group hover:border-slate-700 transition">
+                <div class="absolute -right-4 -top-4 w-24 h-24 bg-purple-500/10 rounded-full blur-xl group-hover:bg-purple-500/20 transition"></div>
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">Active Profile</p>
+                        <h3 id="statCandidateName" class="text-lg font-bold text-white mt-1 truncate max-w-[160px]">Sai Rushi Kasyap</h3>
+                    </div>
+                    <div class="w-12 h-12 rounded-xl bg-purple-500/15 border border-purple-500/30 flex items-center justify-center text-purple-400 text-xl">
+                        <i class="fa-solid fa-id-card"></i>
+                    </div>
+                </div>
+                <div class="mt-2 text-xs text-slate-400 space-y-0.5">
+                    <p id="statCandidateAuth" class="truncate"><i class="fa-solid fa-shield-halved text-purple-400 w-4"></i> STEM OPT</p>
+                    <p id="statCandidateLocation" class="truncate"><i class="fa-solid fa-location-dot text-purple-400 w-4"></i> Monroe, MI</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Candidate Breakdown Summary Section -->
+        <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-4">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+                <div class="flex items-center space-x-2">
+                    <div class="w-7 h-7 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center text-sm">
+                        <i class="fa-solid fa-chart-pie"></i>
+                    </div>
+                    <h3 class="text-sm font-bold text-white uppercase tracking-wider">Per-Candidate Outreach Performance Breakdown</h3>
+                </div>
+                <span class="text-xs text-slate-400">Sent emails count & status per client</span>
+            </div>
+
+            <div id="allCandidatesBreakdownContainer" class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <!-- Populated by app.js -->
+            </div>
+        </div>
+
+        <!-- Navigation Tabs Bar -->
+        <div class="border-b border-slate-800 flex items-center justify-between overflow-x-auto no-scrollbar">
+            <nav class="flex space-x-6" aria-label="Tabs">
+                
+                <button onclick="switchTab('leads')" id="tabBtn-leads" class="tab-btn active text-indigo-400 border-indigo-500 py-3 px-1 border-b-2 font-semibold text-sm flex items-center gap-2 transition">
+                    <i class="fa-solid fa-list-check"></i>
+                    <span>Recruiter Leads</span>
+                    <span id="tabCountLeads" class="ml-1 px-2 py-0.5 text-xs bg-indigo-500/20 text-indigo-300 rounded-full">0</span>
+                </button>
+
+                <button onclick="switchTab('campaign')" id="tabBtn-campaign" class="tab-btn text-slate-400 border-transparent hover:text-slate-200 py-3 px-1 border-b-2 font-semibold text-sm flex items-center gap-2 transition">
+                    <i class="fa-solid fa-paper-plane"></i>
+                    <span>Email Campaign</span>
+                </button>
+
+                <button onclick="switchTab('profiles')" id="tabBtn-profiles" class="tab-btn text-slate-400 border-transparent hover:text-slate-200 py-3 px-1 border-b-2 font-semibold text-sm flex items-center gap-2 transition">
+                    <i class="fa-solid fa-user-gear"></i>
+                    <span>Candidate Profiles</span>
+                </button>
+
+                <button onclick="switchTab('preview')" id="tabBtn-preview" class="tab-btn text-slate-400 border-transparent hover:text-slate-200 py-3 px-1 border-b-2 font-semibold text-sm flex items-center gap-2 transition">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <span>AI Resume & Email Preview</span>
+                </button>
+
+            </nav>
+        </div>
+
+        <!-- TAB CONTENT 1: RECRUITER LEADS PIPELINE -->
+        <section id="tabContent-leads" class="space-y-4 tab-panel">
+            
+            <!-- Controls Bar: Search + Filters + Actions -->
+            <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 bg-slate-900/60 p-4 rounded-2xl border border-slate-800">
+                
+                <!-- Search Input -->
+                <div class="relative flex-1 min-w-[240px]">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                    <input type="text" id="searchInput" oninput="handleSearchInput()" placeholder="Search title, company, email, or keyword..." class="w-full bg-slate-950 text-white placeholder-slate-500 text-sm rounded-xl pl-10 pr-4 py-2 border border-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                </div>
+
+                <!-- Filter Pill Buttons -->
+                <div class="flex items-center space-x-1 bg-slate-950 p-1 rounded-xl border border-slate-800">
+                    <button onclick="setStatusFilter('all')" id="filterBtn-all" class="px-3 py-1.5 text-xs font-semibold rounded-lg bg-indigo-600 text-white shadow">All</button>
+                    <button onclick="setStatusFilter('unsent')" id="filterBtn-unsent" class="px-3 py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-white">Pending</button>
+                    <button onclick="setStatusFilter('sent')" id="filterBtn-sent" class="px-3 py-1.5 text-xs font-semibold rounded-lg text-slate-400 hover:text-white">Sent</button>
+                </div>
+
+                <!-- Refresh Button -->
+                <button onclick="loadJobs()" class="inline-flex items-center gap-2 px-3 py-2 text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl border border-slate-700 transition">
+                    <i class="fa-solid fa-rotate text-indigo-400"></i> Refresh
+                </button>
+
+            </div>
+
+            <!-- Leads Table Container -->
+            <div class="bg-slate-900/90 border border-slate-800 rounded-2xl shadow-xl overflow-hidden">
+                <div class="overflow-x-auto max-h-[600px] overflow-y-auto">
+                    <table id="jobsTable" class="w-full text-left border-collapse">
+                        <thead class="bg-slate-950/80 sticky top-0 z-10 border-b border-slate-800 text-xs font-bold text-slate-400 uppercase tracking-wider">
+                            <tr>
+                                <th class="py-3.5 px-4">Status</th>
+                                <th class="py-3.5 px-4">Candidate Target</th>
+                                <th class="py-3.5 px-4">Job Title</th>
+                                <th class="py-3.5 px-4">Company</th>
+                                <th class="py-3.5 px-4">Recruiter Email</th>
+                                <th class="py-3.5 px-4">Keyword / Source</th>
+                                <th class="py-3.5 px-4 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="jobsTableBody" class="divide-y divide-slate-800/60 text-sm">
+                            <!-- Rows dynamically populated by app.js -->
+                            <tr>
+                                <td colspan="6" class="py-12 text-center text-slate-500">
+                                    <i class="fa-solid fa-spinner fa-spin text-indigo-500 text-2xl mb-2"></i>
+                                    <p>Loading recruiter leads...</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Table Footer Pagination/Status Bar -->
+                <div class="bg-slate-950/60 px-4 py-3 border-t border-slate-800 flex items-center justify-between text-xs text-slate-400">
+                    <div>
+                        Showing <span id="tableShowingCount" class="font-bold text-slate-200">0</span> leads
+                    </div>
+                    <div id="tableStatusHint" class="text-slate-500">
+                        Click row to view full job description
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- TAB CONTENT 2: EMAIL CAMPAIGN LAUNCHER -->
+        <section id="tabContent-campaign" class="space-y-6 hidden tab-panel">
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                
+                <!-- Left: Campaign Settings & Trigger -->
+                <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-xl space-y-6">
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <span class="w-8 h-8 rounded-lg bg-indigo-500/20 text-indigo-400 flex items-center justify-center font-bold text-sm">1</span>
+                            <h3 class="text-lg font-bold text-white">Campaign Configuration</h3>
+                        </div>
+                        <p class="text-xs text-slate-400 mt-1">Configure target candidate and outreach batch size</p>
+                    </div>
+
+                    <!-- Target Candidate -->
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-2">Selected Outreach Candidate</label>
+                        <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-9 h-9 rounded-full bg-indigo-600/20 border border-indigo-500/30 text-indigo-400 flex items-center justify-center font-bold text-sm">
+                                    <i class="fa-solid fa-user-check"></i>
+                                </div>
+                                <div>
+                                    <h4 id="campaignCandidateName" class="font-bold text-sm text-white">Sai Rushi Kasyap</h4>
+                                    <p id="campaignCandidateAuth" class="text-xs text-slate-400">Finance & Accounting • STEM OPT</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Batch Limit Slider -->
+                    <div>
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="text-xs font-semibold text-slate-300 uppercase tracking-wider">Emails per Batch</label>
+                            <span id="limitDisplayValue" class="text-xs font-bold px-2 py-0.5 bg-indigo-500/20 text-indigo-300 rounded-md">5 emails</span>
+                        </div>
+                        <input type="range" id="batchLimitSlider" min="1" max="50" value="5" oninput="updateBatchLimitDisplay(this.value)" class="w-full h-2 bg-slate-800 rounded-lg appearance-none cursor-pointer accent-indigo-500">
+                        <div class="flex justify-between text-[10px] text-slate-500 mt-1">
+                            <span>1 (Test run)</span>
+                            <span>25 (Standard)</span>
+                            <span>50 (Max batch)</span>
+                        </div>
+                    </div>
+
+                    <!-- Target Summary Stats -->
+                    <div class="p-4 bg-slate-950/80 rounded-xl border border-slate-800 space-y-2 text-xs">
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Pending Candidates in DB:</span>
+                            <span id="campaignPendingCount" class="font-bold text-amber-400">--</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">Target Resume Attached:</span>
+                            <span id="campaignResumeName" class="font-medium text-slate-200">Resumes.pdf</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-400">AI Optimization:</span>
+                            <span class="text-emerald-400 font-semibold"><i class="fa-solid fa-check text-xs"></i> Enabled (Gemini/LLM)</span>
+                        </div>
+                    </div>
+
+                    <!-- Action Button -->
+                    <button onclick="executeCampaign()" id="btnStartCampaign" class="w-full py-3 px-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold rounded-xl shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2 transition cursor-pointer">
+                        <i class="fa-solid fa-paper-plane"></i> Start Automated Campaign
+                    </button>
+                </div>
+
+                <!-- Right: Real-time Execution Console -->
+                <div class="lg:col-span-2 bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-xl flex flex-col h-[520px]">
+                    
+                    <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+                        <div class="flex items-center space-x-2">
+                            <span class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-sm">2</span>
+                            <div>
+                                <h3 class="text-base font-bold text-white">Execution Output & Status Console</h3>
+                                <p class="text-xs text-slate-400">Real-time log stream of recruiter outreach process</p>
+                            </div>
+                        </div>
+                        <button onclick="clearConsoleLog()" class="text-xs text-slate-400 hover:text-white bg-slate-800 px-2.5 py-1 rounded-md border border-slate-700">Clear Console</button>
+                    </div>
+
+                    <!-- Terminal Output Box -->
+                    <div id="campaignConsole" class="flex-1 my-4 p-4 bg-slate-950 font-mono text-xs text-slate-300 rounded-xl border border-slate-800/80 overflow-y-auto space-y-1.5 leading-relaxed shadow-inner">
+                        <div class="text-slate-500">// RecruitFlow AI Outreach Engine initialized.</div>
+                        <div class="text-slate-500">// Click 'Start Automated Campaign' to initiate sending.</div>
+                    </div>
+
+                    <!-- Execution Status Footer -->
+                    <div class="pt-3 border-t border-slate-800 flex items-center justify-between text-xs">
+                        <div id="campaignStatusBadge" class="flex items-center space-x-2 text-slate-400">
+                            <span class="w-2.5 h-2.5 rounded-full bg-slate-600"></span>
+                            <span>Idle</span>
+                        </div>
+                        <div class="text-slate-500">
+                            SMTP Gmail API & LLM Active
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- TAB CONTENT 3: CANDIDATE PROFILES -->
+        <section id="tabContent-profiles" class="space-y-6 hidden tab-panel">
+            <div id="candidateProfilesContainer" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Dynamically rendered by app.js -->
+            </div>
+        </section>
+
+        <!-- TAB CONTENT 4: AI RESUME & EMAIL PREVIEW -->
+        <section id="tabContent-preview" class="space-y-6 hidden tab-panel">
+            <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 shadow-xl">
+                
+                <div class="flex items-center justify-between pb-4 border-b border-slate-800">
+                    <div>
+                        <h3 class="text-lg font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-wand-magic-sparkles text-indigo-400"></i> AI Email Generator & Resume Match Preview
+                        </h3>
+                        <p class="text-xs text-slate-400 mt-1">Test how RecruitFlow AI optimizes candidate profile details for job descriptions</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+                    <!-- Left Input Form -->
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">Target Candidate</label>
+                            <select id="previewCandidate" class="w-full bg-slate-950 text-white text-sm rounded-xl p-2.5 border border-slate-800 focus:ring-2 focus:ring-indigo-500">
+                                <option value="rushi">Sai Rushi Kasyap</option>
+                                <option value="anoushika">Santosh Anoushika Komala</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">Job Title</label>
+                            <input type="text" id="previewJobTitle" value="Senior Financial Analyst / Accounting Manager" class="w-full bg-slate-950 text-white text-sm rounded-xl p-2.5 border border-slate-800">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">Company</label>
+                            <input type="text" id="previewCompany" value="Apex Capital Solutions" class="w-full bg-slate-950 text-white text-sm rounded-xl p-2.5 border border-slate-800">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">Recruiter Job Description / Post</label>
+                            <textarea id="previewJobDesc" rows="6" class="w-full bg-slate-950 text-white text-sm rounded-xl p-3 border border-slate-800 focus:ring-2 focus:ring-indigo-500 font-mono text-xs" placeholder="Paste LinkedIn post or job description here...">We are looking for a Senior Accountant / Financial Analyst with experience in General Ledger, Financial Reporting, GAAP compliance, and Budget Analysis. Master's degree preferred. Immediately hiring!</textarea>
+                        </div>
+
+                        <button onclick="generatePreviewEmail()" class="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm rounded-xl shadow transition flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-sparkles"></i> Generate Outreach Email Preview
+                        </button>
+                    </div>
+
+                    <!-- Right Generated Output -->
+                    <div class="bg-slate-950 rounded-xl p-4 border border-slate-800 flex flex-col h-[480px]">
+                        <div class="flex justify-between items-center pb-3 border-b border-slate-800 text-xs text-slate-400">
+                            <span class="font-semibold text-slate-300"><i class="fa-envelope text-indigo-400 mr-1"></i> Personalized Email Output</span>
+                            <span id="previewCandidateBadge" class="bg-indigo-500/20 text-indigo-300 px-2 py-0.5 rounded font-mono text-[11px]">Preview Ready</span>
+                        </div>
+                        <div id="previewEmailOutput" class="flex-1 my-3 overflow-y-auto font-mono text-xs text-slate-300 leading-relaxed whitespace-pre-wrap">
+                            Click 'Generate Outreach Email Preview' to view AI tailored email body...
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODAL 1: ADD RECRUITER LEAD -->
+    <div id="addJobModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm hidden">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-lg w-full p-6 shadow-2xl space-y-4 m-4 relative animate-fade-in">
+            
+            <div class="flex justify-between items-center pb-3 border-b border-slate-800">
+                <h3 class="text-base font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-user-plus text-indigo-400"></i> Add Recruiter Job Lead
+                </h3>
+                <button onclick="closeAddJobModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <form id="addJobForm" onsubmit="handleAddJobSubmit(event)" class="space-y-3 text-xs">
+                <div>
+                    <label class="block font-semibold text-slate-300 mb-1">Target Candidate Database</label>
+                    <select id="addModalClient" class="w-full bg-slate-950 text-white rounded-xl p-2.5 border border-slate-800">
+                        <option value="rushi">Sai Rushi Kasyap (jobs_rushi.db)</option>
+                        <option value="anoushika">Santosh Anoushika Komala (jobs_anoushika.db)</option>
+                        <option value="default">Default DB (jobs.db)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block font-semibold text-slate-300 mb-1">Job Title *</label>
+                    <input type="text" id="addModalTitle" required placeholder="e.g. Senior Financial Analyst" class="w-full bg-slate-950 text-white rounded-xl p-2 border border-slate-800">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block font-semibold text-slate-300 mb-1">Company Name *</label>
+                        <input type="text" id="addModalCompany" required placeholder="e.g. TechCorp Solutions" class="w-full bg-slate-950 text-white rounded-xl p-2 border border-slate-800">
+                    </div>
+                    <div>
+                        <label class="block font-semibold text-slate-300 mb-1">Recruiter Email *</label>
+                        <input type="email" id="addModalEmail" required placeholder="recruiter@company.com" class="w-full bg-slate-950 text-white rounded-xl p-2 border border-slate-800">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-semibold text-slate-300 mb-1">LinkedIn URL / Post Source</label>
+                    <input type="url" id="addModalUrl" placeholder="https://linkedin.com/in/..." class="w-full bg-slate-950 text-white rounded-xl p-2 border border-slate-800">
+                </div>
+
+                <div>
+                    <label class="block font-semibold text-slate-300 mb-1">Job Description / Post Text</label>
+                    <textarea id="addModalDesc" rows="3" placeholder="Enter key details or post requirements..." class="w-full bg-slate-950 text-white rounded-xl p-2 border border-slate-800"></textarea>
+                </div>
+
+                <div class="pt-3 flex justify-end space-x-2 border-t border-slate-800">
+                    <button type="button" onclick="closeAddJobModal()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-slate-300 rounded-xl font-semibold">Cancel</button>
+                    <button type="submit" class="px-5 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold shadow">Save Recruiter Lead</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <!-- MODAL 2: VIEW JOB DETAILS -->
+    <div id="viewJobModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-sm hidden">
+        <div class="bg-slate-900 border border-slate-800 rounded-2xl max-w-2xl w-full p-6 shadow-2xl space-y-4 m-4 relative animate-fade-in">
+            
+            <div class="flex justify-between items-start pb-3 border-b border-slate-800">
+                <div>
+                    <span id="viewJobStatusBadge" class="inline-block text-[11px] font-bold px-2.5 py-0.5 rounded-full mb-1 bg-amber-500/20 text-amber-300">Pending</span>
+                    <h3 id="viewJobTitle" class="text-xl font-bold text-white">Job Title</h3>
+                    <p id="viewJobCompany" class="text-xs text-slate-400">Company</p>
+                </div>
+                <button onclick="closeViewJobModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+            </div>
+
+            <div class="grid grid-cols-2 gap-4 text-xs bg-slate-950 p-3 rounded-xl border border-slate-800">
+                <div>
+                    <span class="text-slate-500 block">Recruiter Email:</span>
+                    <span id="viewJobEmail" class="font-semibold text-indigo-300 select-all">email@example.com</span>
+                </div>
+                <div>
+                    <span class="text-slate-500 block">LinkedIn / Source URL:</span>
+                    <a id="viewJobUrl" href="#" target="_blank" class="font-semibold text-indigo-400 hover:underline truncate block">Open Link</a>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-xs font-semibold text-slate-300 uppercase tracking-wider mb-1">Job Description</label>
+                <div id="viewJobDesc" class="bg-slate-950 p-4 rounded-xl border border-slate-800 font-mono text-xs text-slate-300 max-h-60 overflow-y-auto leading-relaxed whitespace-pre-wrap">
+                    No job description provided.
+                </div>
+            </div>
+
+            <div class="pt-3 flex justify-between items-center border-t border-slate-800 text-xs">
+                <button id="viewJobToggleBtn" onclick="toggleCurrentJobSent()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-lg font-medium border border-slate-700">
+                    Toggle Sent Status
+                </button>
+                <button onclick="closeViewJobModal()" class="px-4 py-1.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg font-bold">
+                    Close
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col space-y-2 pointer-events-none"></div>
+
+    <!-- JS Application File -->
+    <script src="app.js"></script>
+</body>
+</html>

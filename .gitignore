@@ -1,0 +1,17 @@
+venv/
+__pycache__/
+*.pyc
+.env
+backend/.env
+*.db
+backend/*.db
+backend/attachments/
+optimized_resume.txt
+backend/optimized_resume.txt
+backend/linkedin_session.json
+backend/linkedin_page.html
+backend/linkedin_page.txt
+backend/post_extraction_debug.txt
+.DS_Store
+.idea/
+.vscode/

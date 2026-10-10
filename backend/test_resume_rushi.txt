@@ -1,0 +1,57 @@
+RUSHI MUKKAMALA
+Assistant Controller · Nonprofit Fund Accounting & Government Compliance
+
+San Dimas, CA (Relocating) | 346-646-8149 | rushimukkamala5@gmail.com | LinkedIn | GitHub
+
+PROFESSIONAL SUMMARY
+Results-driven Assistant Controller with 11+ years of progressive nonprofit and multi-entity finance experience managing full-cycle accounting operations for organizations with budgets exceeding $20M. Deep expertise in GAAP compliance, OMB Uniform Guidance (2 CFR Part 200), nonprofit fund accounting, restricted fund management, and grant accounting with federal, state, county, and private funding sources. Proven ability to lead month-end and year-end close processes, prepare and review journal entries, reconciliations, and financial statements, oversee contract billing, support external audits, and strengthen internal controls. Experienced in supervising and mentoring accounting staff, preparing Board-level financial reports, and serving as a strategic partner to the Controller. Proficient in SAGE 100, SAGE 150, Sage Intacct, Bill.com, Ramp, and Microsoft Office 365 with advanced Excel. Committed to mission-driven financial stewardship supporting children and families.
+
+CERTIFICATIONS
+- Risk Management Professional · Simplilearn · 2024
+- Fundamentals of Corporate Finance · Simplilearn · 2023
+
+EDUCATION
+- Master of Science in Finance, University of Houston, Houston, TX
+- Bachelor of Science in Accounting
+  Relevant Coursework: Nonprofit Fund Accounting, Federal Grant Compliance, Financial Statement Analysis, Internal Controls
+
+TECHNICAL SKILLS
+- Compliance: GAAP · OMB Uniform Guidance (2 CFR Part 200) · Nonprofit Fund Accounting · Restricted Fund Management · Federal / State / County Grant Compliance · Internal Controls
+- Accounting: Full-Cycle Accounting · Month-End & Year-End Close · Journal Entries & Reconciliations · Financial Statement Preparation & Review · Grant Accounting · Contract Billing · AP · AR · General Ledger · Budgeting & Forecasting · Board Reporting
+- ERP & Systems: SAGE 100 · SAGE 150 · Sage Intacct · Bill.com · Ramp · QuickBooks Online · Microsoft Office 365 · Advanced Excel (VBA / Macros / Pivot Tables)
+- Leadership: Staff Supervision & Mentoring · External Audit Liaison · Cross-Departmental Collaboration · Process Improvement · Financial Workflow Automation · Executive & Board Reporting
+- Analytics: SQL (Advanced Audit Queries) · Power BI · Tableau · Python (Financial Trend Analysis) · KPI Reporting · Large Dataset Management
+
+PROFESSIONAL EXPERIENCE
+- Business Manager (Assistant Controller), K & S Family Health · Michigan · 07/2025 – Present
+  * Lead full-cycle accounting operations for multi-location healthcare organizations including AP, AR, general ledger maintenance, and month-end close — ensuring 100% GAAP compliance across all cost centers.
+  * Direct month-end and year-end close processes including preparation and review of journal entries, account reconciliations, complex accrual reclasses, and consolidated financial statement preparation for executive and board-level reporting.
+  * Oversee restricted fund and grant accounting across multiple federal and private funding sources, coordinating contract billing and compliance reporting aligned with OMB Uniform Guidance standards.
+  * Serve as key liaison to external auditors for annual audit engagement, reducing preparation effort by 20% through standardized documentation, automated tracking workflows, and proactive audit readiness.
+  * Strengthen internal controls by designing and implementing standardized accounting procedures, segregation of duties protocols, and automated reconciliation workflows across clinical departments.
+  * Supervise and mentor accounting staff, establishing performance benchmarks and providing guidance on GAAP compliance, journal entry standards, and financial reporting best practices.
+  * Lead annual budgeting and forecasting process; prepare variance analysis reports and financial dashboards for executive leadership to support data-informed decision-making.
+  * Orchestrated vendor and account audits exceeding $5M, resolving historical discrepancies and reclaiming lost capital through systematic reconciliation and internal controls improvements.
+
+- Associate Team Lead – Financial Reporting, H&R Block · Columbus, Ohio · 01/2025 – 04/2025
+  * Automated journal entry workflows and financial reporting using Excel VBA and SQL, eliminating 20+ hours of manual monthly tasks and accelerating the close cycle by 2 hours per period.
+  * Prepared and reviewed multi-site financial statements and P&L; analysis, ensuring accuracy and transparency for management review and regulatory reporting requirements.
+  * Delivered KPI reporting and analytical insights to executive leadership, improving operational efficiency by 18% through data-driven identification of cost-saving opportunities.
+  * Collaborated with department heads on budgeting, forecasting, and labor productivity analysis, aligning financial operations with broader organizational goals.
+
+- Finance Manager, Valluru Associates · Hyderabad, India · 01/2025 – 04/2025
+  * Managed comprehensive full-cycle accounting operations across multi-site facilities, increasing financial reporting accuracy by 20% through process optimization and controls implementation.
+  * Led a cross-functional team of 15+ accounting staff, providing supervision, mentoring, and performance accountability — improving workflow efficiency, compliance adherence, and reconciliation accuracy.
+  * Directed budgeting, forecasting, and resource allocation analysis, reducing operational costs by 15% and improving cost visibility across all departments.
+  * Implemented performance tracking systems that accelerated account reconciliation speed by 25% and improved accuracy scores across all financial reporting periods.
+
+KEY PROJECTS
+- Financial Close Optimization & Oversight Tool
+  * Built an automated workflow tracker to manage and audit the full 15-day close cycle for outsourced and internal accounting teams — including journal entry review, reconciliation sign-off, and financial statement readiness tracking — mirroring the Assistant Controller oversight function at scale.
+  * Engineered SQL-based audit queries to identify bottleneck reconciliations in real time, reducing month-end close velocity by 2 hours and improving visibility into fiscal readiness by department.
+  * Developed a Power BI Executive Dashboard visualizing close status, journal entry reconciliation progress, and financial statement preparation milestones for senior leadership and board reporting.
+
+- Nonprofit Sustainability & Indirect Cost Allocation Engine
+  * Architected a dynamic grant cost allocation framework using SQL and Excel VBA, applying weighted indirect cost drivers (FTE, sq. footage, direct costs) across restricted and unrestricted program funds — directly replicating OMB Uniform Guidance / 2 CFR Part 200 allocation methodology for a $50M nonprofit environment.
+  * Analyzed 8 years of nonprofit financial data (2016–2023) to identify program expense ratio trends, restricted fund sustainability risks, and grant dependency exposure — delivering Board-level financial reporting with scenario modeling for 10–50% funding cut impacts.
+  * Integrated SAGE-compatible GL export structure with Power BI dashboards, demonstrating real-time grant accounting and contract billing visibility for executive leadership.
